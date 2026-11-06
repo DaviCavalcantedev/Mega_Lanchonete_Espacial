@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#060a18">
+  <meta name="description" content="Mega Lanchonete Espacial: hambúrgueres, pizzas, aperitivos, sobremesas e bebidas com sabores de outro mundo.">
+  <title>Mega Lanchonete Espacial</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='9' fill='%23ff6b2c'/%3E%3Cellipse cx='16' cy='16' rx='15' ry='5' fill='none' stroke='%23e9eefc' stroke-width='2' transform='rotate(-22 16 16)'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,500..900&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-tema="laranja">
+<canvas id="estrelas" aria-hidden="true"></canvas>
+
+<svg class="sprite" width="0" height="0" aria-hidden="true" focusable="false">
+  <defs>
+    <symbol id="i-cardapio" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M4 12h16M12 4c2.6 2.4 2.6 13.6 0 16M12 4c-2.6 2.4-2.6 13.6 0 16"/></symbol>
+    <symbol id="i-pedido" viewBox="0 0 24 24"><path d="M5 8h14l-1.2 11H6.2zM9 8V6a3 3 0 0 1 6 0v2"/></symbol>
+    <symbol id="i-pagamento" viewBox="0 0 24 24"><rect x="3" y="6" width="18" height="12" rx="2"/><path d="M3 10h18M7 15h3"/></symbol>
+    <symbol id="i-perfil" viewBox="0 0 24 24"><circle cx="12" cy="9" r="3.5"/><path d="M5 20c.8-3.6 3.5-5.5 7-5.5s6.2 1.9 7 5.5"/></symbol>
+    <symbol id="i-config" viewBox="0 0 24 24"><path d="M4 7h9M17 7h3M4 17h3M11 17h9"/><circle cx="15" cy="7" r="2"/><circle cx="9" cy="17" r="2"/></symbol>
+    <symbol id="i-mais" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-menos" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol>
+    <symbol id="i-lixo" viewBox="0 0 24 24"><path d="M5 7h14M10 7V5h4v2M7 7l1 12h8l1-12"/></symbol>
+    <symbol id="i-fechar" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+    <symbol id="i-ok" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+    <!-- avatares -->
+    <symbol id="a-astronauta" viewBox="0 0 24 24"><path d="M12 3a7 7 0 0 0-7 7v3a5 5 0 0 0 5 5h4a5 5 0 0 0 5-5v-3a7 7 0 0 0-7-7z"/><path d="M8 10.5c0-1.4 1.8-2.5 4-2.5s4 1.1 4 2.5-1.8 2.5-4 2.5-4-1.1-4-2.5zM9 21h6"/></symbol>
+    <symbol id="a-foguete" viewBox="0 0 24 24"><path d="M12 2.5c3 2.2 4.5 5.6 4.5 9.5v4h-9v-4c0-3.9 1.500-7.300 4.500-9.500zM7.500 13.500L4.500 17l3 .5M16.500 13.500l3 3.500-3 .5M10 19.500c0 1.200.7 2 2 2.500 1.300-.5 2-1.300 2-2.500"/><circle cx="12" cy="10" r="1.600"/></symbol>
+    <symbol id="a-planeta" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><path d="M3 15c-1-3 4.500-8 12-9.500 4-.8 6.500-.4 6.500 1.500 0 2.500-4 6-9.500 8.200-4.500 1.800-8.200 2.200-9 .8z"/></symbol>
+    <symbol id="a-cometa" viewBox="0 0 24 24"><circle cx="16.500" cy="7.500" r="3.500"/><path d="M14 10L4 20M12.500 7.500L4 12M16.500 11.500L11.500 20"/></symbol>
+    <symbol id="a-satelite" viewBox="0 0 24 24"><rect x="9" y="9" width="6" height="6" rx="1" transform="rotate(45 12 12)"/><path d="M5 5l3 3M16 16l3 3M3 9l6-6M15 21l6-6M3 5l2-2M19 21l2-2"/></symbol>
+    <symbol id="a-alienigena" viewBox="0 0 24 24"><path d="M12 3c4.500 0 7.500 3.200 7.500 7 0 4.500-3.500 9-7.500 11-4-2-7.500-6.500-7.500-11C4.500 6.200 7.500 3 12 3z"/><path d="M7.500 10.500c1.500.2 2.800 1 3 2-1.500.2-2.800-.5-3-2zM16.500 10.500c-1.500.2-2.800 1-3 2 1.500.2 2.800-.5 3-2z"/></symbol>
+  </defs>
+</svg>
+
+<div class="estacao">
+  <aside class="lateral" aria-label="Navegação">
+    <a class="marca" href="/" aria-label="Mega Lanchonete Espacial, início">
+      <svg class="marca-logo" viewBox="0 0 48 48" aria-hidden="true">
+        <defs>
+          <radialGradient id="g-planeta" cx="35%" cy="30%" r="75%"><stop offset="0" class="p-luz"/><stop offset="1" class="p-sombra"/></radialGradient>
+        </defs>
+        <path d="M2 28c4 5 14 7 26 4" fill="none" stroke="#e9eefc" stroke-opacity=".55" stroke-width="1.600" stroke-linecap="round"/>
+        <circle cx="24" cy="24" r="12" fill="url(#g-planeta)"/>
+        <path d="M46 20c-4-5-14-7-26-4" fill="none" stroke="#e9eefc" stroke-width="1.600" stroke-linecap="round"/>
+      </svg>
+      <span class="marca-texto"><b>Mega Lanchonete</b><i>Espacial</i></span>
+    </a>
+
+    <nav class="navegacao" aria-label="Seções do site">
+      <button type="button" data-aba="cardapio" class="ativo"><svg><use href="#i-cardapio"/></svg><span>Cardápio</span></button>
+      <button type="button" data-aba="pedido"><svg><use href="#i-pedido"/></svg><span>Meu pedido</span><em id="selo-qtd" class="selo" hidden>0</em></button>
+      <button type="button" data-aba="pagamento"><svg><use href="#i-pagamento"/></svg><span>Pagamento</span></button>
+      <button type="button" data-aba="perfil"><svg><use href="#i-perfil"/></svg><span>Perfil</span></button>
+      <button type="button" data-aba="configuracoes"><svg><use href="#i-config"/></svg><span>Configurações</span></button>
+    </nav>
+
+    <div class="resumo" id="resumo">
+      <div class="resumo-linha"><span id="resumo-qtd">Pedido vazio</span><strong id="resumo-total">R$ 0,00</strong></div>
+      <button type="button" class="btn btn-acento btn-bloco" id="resumo-ir" disabled>Revisar pedido</button>
+    </div>
+
+    <button type="button" class="conta" id="conta-chip">
+      <span class="avatar" id="conta-avatar"><svg><use href="#a-astronauta"/></svg></span>
+      <span class="conta-texto"><b id="conta-nome">Visitante</b><i id="conta-sub">Entrar ou criar conta</i></span>
+    </button>
+  </aside>
+
+  <main class="conteudo" id="conteudo" tabindex="-1">
+
+    <!-- CARDÁPIO -->
+    <section id="cardapio" class="aba ativa" aria-labelledby="t-cardapio">
+      <div class="hero">
+        <div class="hero-texto">
+          <h1 id="t-cardapio">Sabores de outro mundo</h1>
+          <p>Hambúrgueres, pizzas, aperitivos, sobremesas e bebidas preparados na estação. Escolha, monte seu pedido e acompanhe tudo pela sua conta.</p>
+        </div>
+        <svg class="hero-planeta" viewBox="0 0 420 420" aria-hidden="true">
+          <defs>
+            <radialGradient id="g-hero" cx="32%" cy="28%" r="80%"><stop offset="0" class="p-luz"/><stop offset=".55" class="p-meio"/><stop offset="1" class="p-sombra"/></radialGradient>
+            <clipPath id="c-frente"><rect x="0" y="210" width="420" height="210"/></clipPath>
+          </defs>
+          <g transform="rotate(-18 210 210)">
+            <ellipse cx="210" cy="210" rx="205" ry="48" fill="none" stroke="#e9eefc" stroke-opacity=".28" stroke-width="2"/>
+            <ellipse cx="210" cy="210" rx="178" ry="38" fill="none" stroke="#e9eefc" stroke-opacity=".14" stroke-width="1.500"/>
+          </g>
+          <circle cx="210" cy="210" r="112" fill="url(#g-hero)"/>
+          <path d="M120 170c40 14 140 14 182-4M104 214c52 16 160 16 212-6M122 258c40 12 136 12 176-2" fill="none" stroke="#060a18" stroke-opacity=".16" stroke-width="7" stroke-linecap="round"/>
+          <g transform="rotate(-18 210 210)" clip-path="url(#c-frente)">
+            <ellipse cx="210" cy="210" rx="205" ry="48" fill="none" stroke="#e9eefc" stroke-opacity=".8" stroke-width="2.500"/>
+            <ellipse cx="210" cy="210" rx="178" ry="38" fill="none" stroke="#e9eefc" stroke-opacity=".4" stroke-width="1.500"/>
+          </g>
+          <circle cx="350" cy="92" r="7" fill="#e9eefc" fill-opacity=".85"/>
+        </svg>
+      </div>
+
+      <div class="categorias" role="group" aria-label="Categorias do cardápio" id="categorias"></div>
+      <div id="grade-produtos" class="grade" aria-live="polite"></div>
+    </section>
+
+    <!-- PEDIDO -->
+    <section id="pedido" class="aba" aria-labelledby="t-pedido">
+      <header class="aba-topo"><h2 id="t-pedido">Meu pedido</h2><p>Ajuste as quantidades antes de seguir para o pagamento.</p></header>
+      <div class="painel">
+        <ul id="lista-pedido" class="lista-pedido"></ul>
+        <div id="pedido-vazio" class="vazio">
+          <svg class="vazio-ico" viewBox="0 0 24 24"><use href="#i-pedido"/></svg>
+          <p>Nenhum item por aqui ainda.</p>
+          <button type="button" class="btn btn-contorno" data-ir="cardapio">Explorar o cardápio</button>
+        </div>
+        <div class="totais" id="pedido-totais" hidden>
+          <div class="totais-linha"><span>Itens</span><span id="pedido-itens">0</span></div>
+          <div class="totais-linha totais-final"><span>Total</span><strong id="pedido-total">R$ 0,00</strong></div>
+        </div>
+        <div class="acoes" id="pedido-acoes" hidden>
+          <button type="button" class="btn btn-perigo-suave" id="limpar">Limpar pedido</button>
+          <button type="button" class="btn btn-acento" data-ir="pagamento">Ir para o pagamento</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGAMENTO -->
+    <section id="pagamento" class="aba" aria-labelledby="t-pagamento">
+      <header class="aba-topo"><h2 id="t-pagamento">Pagamento</h2><p>Confira o total, escolha a forma de pagamento e confirme.</p></header>
+      <div class="duas-colunas">
+        <div class="painel">
+          <h3>Forma de pagamento</h3>
+          <div class="opcoes-pagamento" id="opcoes-pagamento" role="radiogroup" aria-label="Forma de pagamento"></div>
+          <label class="campo"><span>Observações para a cozinha <span class="opcional">(opcional)</span></span>
+            <textarea id="observacao" rows="3" maxlength="200" placeholder="Ex.: sem cebola, molho à parte"></textarea>
+          </label>
+          <div class="entrega" id="entrega-info"></div>
+          <div class="entrega" id="email-info" hidden></div>
+        </div>
+        <aside class="painel painel-total" aria-label="Resumo">
+          <span class="rotulo">Total a pagar</span>
+          <div class="total-grande" id="total-pagamento">R$ 0,00</div>
+          <ul class="mini-lista" id="mini-lista"></ul>
+          <button type="button" class="btn btn-acento btn-bloco btn-grande" id="confirmar">Confirmar pedido</button>
+          <p class="nota">Pagamento demonstrativo: nenhuma cobrança real é feita.</p>
+        </aside>
+      </div>
+    </section>
+
+    <!-- PERFIL -->
+    <section id="perfil" class="aba" aria-labelledby="t-perfil">
+      <header class="aba-topo"><h2 id="t-perfil">Perfil</h2><p id="perfil-sub">Crie uma conta para guardar seus dados, endereço e histórico de pedidos.</p></header>
+
+      <div id="perfil-visitante" class="auth">
+        <div class="painel auth-painel">
+          <div class="segmento" role="tablist" aria-label="Acesso à conta">
+            <button type="button" role="tab" class="ativo" data-auth="entrar" aria-selected="true">Entrar</button>
+            <button type="button" role="tab" data-auth="criar" aria-selected="false">Criar conta</button>
+          </div>
+
+          <form id="form-entrar" class="form" novalidate>
+            <label class="campo">E-mail
+              <input type="email" name="email" autocomplete="email" required placeholder="voce@exemplo.com">
+            </label>
+            <label class="campo">Senha
+              <input type="password" name="senha" autocomplete="current-password" required>
+            </label>
+            <p class="erro-form" role="alert" hidden></p>
+            <button type="submit" class="btn btn-acento btn-bloco">Entrar</button>
+          </form>
+
+          <form id="form-criar" class="form" novalidate hidden>
+            <label class="campo">Nome
+              <input type="text" name="nome" autocomplete="name" maxlength="60" required placeholder="Como devemos chamar você?">
+            </label>
+            <label class="campo">E-mail
+              <input type="email" name="email" autocomplete="email" maxlength="120" required placeholder="voce@exemplo.com">
+            </label>
+            <label class="campo">Senha
+              <input type="password" name="senha" autocomplete="new-password" minlength="8" maxlength="72" required>
+              <span class="dica">De 8 a 72 caracteres, com letras e números.</span>
+            </label>
+            <label class="campo">Repita a senha
+              <input type="password" name="confirma" autocomplete="new-password" required>
+            </label>
+            <p class="erro-form" role="alert" hidden></p>
+            <button type="submit" class="btn btn-acento btn-bloco">Criar conta</button>
+          </form>
+        </div>
+        <div class="auth-lateral">
+          <h3>Por que criar uma conta?</h3>
+          <ul class="lista-simples">
+            <li>Histórico dos seus pedidos, sempre à mão</li>
+            <li>Endereço de entrega salvo para os próximos pedidos</li>
+            <li>Preferências do site guardadas em qualquer aparelho</li>
+          </ul>
+          <p class="nota">Sua senha é guardada com criptografia. Nem nós conseguimos ler.</p>
+        </div>
+      </div>
+
+      <div id="perfil-logado" hidden>
+        <div class="cabeca-perfil">
+          <span class="avatar avatar-grande" id="perfil-avatar"><svg><use href="#a-astronauta"/></svg></span>
+          <div>
+            <h3 id="perfil-nome-titulo">Explorador</h3>
+            <p id="perfil-meta" class="suave"></p>
+          </div>
+          <button type="button" class="btn btn-contorno" id="sair">Sair da conta</button>
+        </div>
+
+        <div class="segmento segmento-largo" role="tablist" aria-label="Seções do perfil">
+          <button type="button" role="tab" class="ativo" data-psub="dados" aria-selected="true">Dados</button>
+          <button type="button" role="tab" data-psub="entrega" aria-selected="false">Entrega</button>
+          <button type="button" role="tab" data-psub="seguranca" aria-selected="false">Segurança</button>
+          <button type="button" role="tab" data-psub="historico" aria-selected="false">Pedidos</button>
+        </div>
+
+        <div class="psub ativa" id="psub-dados">
+          <form id="form-dados" class="painel form" novalidate>
+            <fieldset class="campo-grupo">
+              <legend>Avatar</legend>
+              <div class="avatares" id="avatares" role="radiogroup" aria-label="Escolha seu avatar"></div>
+            </fieldset>
+            <div class="grade-form">
+              <label class="campo">Nome
+                <input type="text" name="nome" maxlength="60" autocomplete="name" required>
+              </label>
+              <label class="campo">E-mail
+                <input type="email" name="email" maxlength="120" autocomplete="email" required>
+              </label>
+              <label class="campo"><span>Telefone <span class="opcional">(opcional)</span></span>
+                <input type="tel" name="telefone" maxlength="20" autocomplete="tel" placeholder="(21) 99999-9999">
+              </label>
+            </div>
+            <p class="erro-form" role="alert" hidden></p>
+            <div class="acoes"><button type="submit" class="btn btn-acento">Salvar dados</button></div>
+          </form>
+        </div>
+
+        <div class="psub" id="psub-entrega">
+          <form id="form-entrega" class="painel form" novalidate>
+            <div class="grade-form">
+              <label class="campo">CEP
+                <input type="text" name="cep" inputmode="numeric" maxlength="9" autocomplete="postal-code" placeholder="00000-000">
+              </label>
+              <label class="campo campo-largo">Rua
+                <input type="text" name="rua" maxlength="120" autocomplete="address-line1">
+              </label>
+              <label class="campo">Número
+                <input type="text" name="numero" maxlength="10">
+              </label>
+              <label class="campo">Complemento
+                <input type="text" name="complemento" maxlength="60" autocomplete="address-line2">
+              </label>
+              <label class="campo">Bairro
+                <input type="text" name="bairro" maxlength="60">
+              </label>
+              <label class="campo">Cidade
+                <input type="text" name="cidade" maxlength="60" autocomplete="address-level2">
+              </label>
+              <label class="campo">Estado
+                <select name="uf" autocomplete="address-level1"><option value="">UF</option></select>
+              </label>
+            </div>
+            <p class="erro-form" role="alert" hidden></p>
+            <div class="acoes"><button type="submit" class="btn btn-acento">Salvar endereço</button></div>
+          </form>
+        </div>
+
+        <div class="psub" id="psub-seguranca">
+          <form id="form-senha" class="painel form" novalidate>
+            <h3>Alterar senha</h3>
+            <div class="grade-form">
+              <label class="campo">Senha atual
+                <input type="password" name="atual" autocomplete="current-password" required>
+              </label>
+              <label class="campo">Nova senha
+                <input type="password" name="nova" autocomplete="new-password" minlength="8" maxlength="72" required>
+                <span class="dica">De 8 a 72 caracteres, com letras e números.</span>
+              </label>
+              <label class="campo">Repita a nova senha
+                <input type="password" name="confirma" autocomplete="new-password" required>
+              </label>
+            </div>
+            <p class="erro-form" role="alert" hidden></p>
+            <div class="acoes"><button type="submit" class="btn btn-acento">Atualizar senha</button></div>
+          </form>
+          <div class="painel zona-risco">
+            <div>
+              <h3>Excluir conta</h3>
+              <p class="suave">Remove seus dados, endereço e preferências de forma permanente. Os pedidos já feitos permanecem sem ligação com você.</p>
+            </div>
+            <button type="button" class="btn btn-perigo" id="excluir-conta">Excluir minha conta</button>
+          </div>
+        </div>
+
+        <div class="psub" id="psub-historico">
+          <div class="painel">
+            <ul class="historico" id="historico"></ul>
+            <div class="vazio" id="historico-vazio" hidden>
+              <p>Você ainda não fez nenhum pedido.</p>
+              <button type="button" class="btn btn-contorno" data-ir="cardapio">Explorar o cardápio</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONFIGURAÇÕES -->
+    <section id="configuracoes" class="aba" aria-labelledby="t-config">
+      <header class="aba-topo"><h2 id="t-config">Configurações</h2><p id="config-sub">As mudanças valem na hora e ficam guardadas neste navegador.</p></header>
+      <div class="config-grade">
+        <div class="painel">
+          <h3>Aparência</h3>
+          <fieldset class="campo-grupo">
+            <legend>Cor de destaque</legend>
+            <div class="temas" id="temas" role="radiogroup" aria-label="Cor de destaque"></div>
+          </fieldset>
+          <label class="campo">Tamanho do texto
+            <select id="cfg-texto">
+              <option value="normal">Padrão</option>
+              <option value="grande">Grande</option>
+              <option value="maior">Maior</option>
+            </select>
+          </label>
+          <label class="chave"><input type="checkbox" id="cfg-estrelas"><span class="chave-trilho"></span><span class="chave-texto"><b>Fundo estrelado</b><i>Mostra o céu animado atrás do site.</i></span></label>
+          <label class="chave"><input type="checkbox" id="cfg-animacoes"><span class="chave-trilho"></span><span class="chave-texto"><b>Reduzir animações</b><i>Desliga movimentos e transições.</i></span></label>
+          <label class="chave"><input type="checkbox" id="cfg-compacto"><span class="chave-trilho"></span><span class="chave-texto"><b>Modo compacto</b><i>Cartões menores e mais itens na tela.</i></span></label>
+        </div>
+        <div class="painel">
+          <h3>Cardápio e pedido</h3>
+          <label class="chave"><input type="checkbox" id="cfg-descricoes"><span class="chave-trilho"></span><span class="chave-texto"><b>Descrições sempre visíveis</b><i>Mostra o texto de cada produto sem precisar passar o mouse.</i></span></label>
+          <label class="campo">Pagamento preferido
+            <select id="cfg-pagamento"><option value="">Escolher a cada pedido</option></select>
+          </label>
+          <label class="chave"><input type="checkbox" id="cfg-notificacoes"><span class="chave-trilho"></span><span class="chave-texto"><b>Recibo na tela</b><i>Abre o recibo na tela quando um pedido for registrado.</i></span></label>
+          <label class="chave"><input type="checkbox" id="cfg-email"><span class="chave-trilho"></span><span class="chave-texto"><b>Cobrança por e-mail</b><i>Envia ao e-mail da sua conta a cobrança de cada pedido. É uma demonstração, sem valor real. Vale para quem tem conta.</i></span></label>
+          <div class="acoes acoes-fim"><button type="button" class="btn btn-contorno" id="cfg-restaurar">Restaurar padrão</button></div>
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<div class="barra-pedido" id="barra-pedido" hidden>
+  <div><span id="barra-qtd">0 itens</span><strong id="barra-total">R$ 0,00</strong></div>
+  <button type="button" class="btn btn-acento" data-ir="pedido">Ver pedido</button>
+</div>
+
+<div class="toasts" id="toasts" aria-live="polite" aria-atomic="false"></div>
+<dialog id="modal" class="modal"></dialog>
+
+<script src="js/app.js" defer></script>
+</body>
+</html>
